@@ -69,4 +69,4 @@ jobs:
         push: true
         tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
 
-#v3
+#v4
