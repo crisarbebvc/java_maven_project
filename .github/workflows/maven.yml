@@ -69,6 +69,6 @@ jobs:
         push: true
         tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
         #tags: ${{ steps.meta.outputs.tags }}
-        labels: "label:${{ github.head_ref }}"
+        labels: "env=${{ github.head_ref }}"
 
 #v4
