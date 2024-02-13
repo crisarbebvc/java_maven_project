@@ -3,8 +3,6 @@ name: Java Maven Build & Publish Artifact
 on:
   push:
     branches: [ "main" ]
-    tags:
-      - 'v*'
   pull_request:
     branches: [ "main" ]
 
@@ -64,24 +62,15 @@ jobs:
     #- name: Docker push
     #  run: |
     #    docker push registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
-    - name: Docker meta
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: |
-          registry.nuamexchange.com/test-devops/jar-artifact
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
+    - name: Branch name
+      run: echo running on branch ${GITHUB_REF##*/}
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
         context: .
         push: true
-        #tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
-        tags: ${{ steps.meta.outputs.tags }}
+        tags: registry.nuamexchange.com/test-devops/jar-artifact:${GITHUB_REF##*/}
+        #tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
 
 #v4
