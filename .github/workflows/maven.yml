@@ -39,7 +39,7 @@ jobs:
     - uses: actions/upload-artifact@v3
       with:
         name: jar-artifact
-        path: ${{ github.workspace }}/my-app/target/*.jar
+        path: staging/
         retention-days: 1
 
   deploy:
@@ -55,7 +55,7 @@ jobs:
     - uses: actions/download-artifact@v1
       with:
         name: jar-artifact
-        path: target/
+        path: staging/
     - name: Docker build
       run: |
         docker build . -t registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
@@ -63,4 +63,4 @@ jobs:
       run: |
         docker push registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
 
-#v2
+#v3
