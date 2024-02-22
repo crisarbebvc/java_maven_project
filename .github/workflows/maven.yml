@@ -56,18 +56,22 @@ jobs:
       with:
         name: jar-artifact
         path: staging/
-    #- name: Docker build
-    #  run: |
-    #    docker build . -f ./Dockerfile -t registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
-    #- name: Docker push
-    #  run: |
-    #    docker push registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v5 # more documentation
-      with:
-        context: .
-        push: true
-        tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} # semver tag version
-        labels: "env=${{ github.head_ref }}" # label env - Pull request branch - development, release, production
-
+    #- name: Build and push Docker image
+    #  uses: docker/build-push-action@v5 # more documentation
+    #  with:
+    #    context: .
+    #    push: true
+    #    tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} # semver tag version
+    #    labels: "env=${{ github.head_ref }}" # label env - Pull request branch - development, release, production
+    - name: Build and push an image
+      run: |
+        docker run \
+          -v $(pwd):/workspace \
+          -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
+          gcr.io/kaniko-project/executor:latest \
+            --context dir: . \
+            --dockerfile Dockerfile \
+            --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
+            --cache=true \
+            --cache-repo registry.nuamexchange.com/test-devops/jar-artifact -cache
 #v5
