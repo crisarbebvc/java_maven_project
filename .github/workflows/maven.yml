@@ -63,7 +63,6 @@ jobs:
     #    push: true
     #    tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} # semver tag version
     #    labels: "env=${{ github.head_ref }}" # label env - Pull request branch - development, release, production
-    - uses: actions/checkout@v4
     - name: Build and push an image
       run: |
         AUTH=$(echo -n ${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }} | base64)
