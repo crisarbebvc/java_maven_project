@@ -63,8 +63,8 @@ jobs:
     #    push: true
     #    tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} # semver tag version
     #    labels: "env=${{ github.head_ref }}" # label env - Pull request branch - development, release, production
-    
-    - name: Generate a config.json
+    - uses: actions/checkout@v4
+    - name: Build and push an image
       run: |
         AUTH=$(echo -n ${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }} | base64)
         cat <<JSON > config.json
@@ -76,9 +76,6 @@ jobs:
           }
         }
         JSON
-    - uses: actions/checkout@v4
-    - name: Build and push an image
-      run: |
         docker run \
           -v $(pwd):/workspace \
           -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
