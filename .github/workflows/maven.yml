@@ -70,7 +70,7 @@ jobs:
         {
           "auths": {
             "registry.nuamexchange.com/test-devops/jar-artifact": {
-              "auth": "base64(${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }})"
+              "auth": "$(echo -n :${{ secrets.HARBOR_USERNAME  }} | base64)"
             }
           }
         }
@@ -86,7 +86,7 @@ jobs:
             --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
             --cache=true \
             --cache-repo registry.nuamexchange.com/test-devops/jar-artifact -cache
-            
+
     #- name: Build and push
     #  uses: int128/kaniko-action@v1
     #  with:
