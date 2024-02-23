@@ -68,9 +68,9 @@ jobs:
       run: |
         cat <<JSON > config.json
         {
-          "auths": {
-            "registry.nuamexchange.com/test-devops/jar-artifact": {
-              "auth": "$(echo -n :${{ secrets.HARBOR_USERNAME  }} | base64)"
+          "auths":{
+            "registry.nuamexchange.com/test-devops/jar-artifact":{
+              "username":"${{ secrets.HARBOR_USERNAME  }}","password":"${{ secrets.HARBOR_PASSWORD }}"
             }
           }
         }
