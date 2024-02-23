@@ -70,7 +70,7 @@ jobs:
         {
           "auths":{
             "registry.nuamexchange.com/test-devops/jar-artifact":{
-              "username":"${{ secrets.HARBOR_USERNAME  }}","password":"${{ secrets.HARBOR_PASSWORD }},"auth":${{ secrets.HARBOR_USERNAME  }}${{ secrets.HARBOR_PASSWORD }}"
+              "username":"${{ secrets.HARBOR_USERNAME  }}","password":"${{ secrets.HARBOR_PASSWORD }}","auth":"${{ secrets.HARBOR_USERNAME  }}${{ secrets.HARBOR_PASSWORD }}"
             }
           }
         }
@@ -95,4 +95,4 @@ jobs:
     #    tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
     #    cache: true
     #    cache-repository: registry.nuamexchange.com/test-devops/jar-artifact/cache
-#v5
+#v6
