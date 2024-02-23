@@ -67,7 +67,7 @@ jobs:
     - name: Build and push an image
       run: |
         AUTH=$(echo -n ${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }} | base64)
-        cat <<JSON > config.json
+        cat << EOF > config.json
         {
           "auths":{
             "registry.nuamexchange.com/test-devops/jar-artifact":{
@@ -75,15 +75,13 @@ jobs:
             }
           }
         }
-        JSON
+        EOF
         docker run \
           -v $(pwd):/workspace \
           -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
           gcr.io/kaniko-project/executor:latest \
             --dockerfile=Dockerfile \
             --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
-            --cache=true \
-            --cache-repo registry.nuamexchange.com/test-devops/jar-artifact -cache
 
     #- name: Build and push
     #  uses: int128/kaniko-action@v1
