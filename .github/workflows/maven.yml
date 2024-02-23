@@ -63,25 +63,33 @@ jobs:
     #    push: true
     #    tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} # semver tag version
     #    labels: "env=${{ github.head_ref }}" # label env - Pull request branch - development, release, production
-    - name: Generate a config.json
-      run: |
-        cat <<JSON > config.json
-        {
-          "auths": {
-            "registry.nuamexchange.com/test-devops/jar-artifact": {
-              "auth": "base64(${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }})"
-            }
-          }
-        }
-    - name: Build and push an image
-      run: |
-        docker run \
-          -v $(pwd):/workspace \
-          -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
-          gcr.io/kaniko-project/executor:latest \
-            --context . \
-            --dockerfile Dockerfile \
-            --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
-            --cache=true \
-            --cache-repo registry.nuamexchange.com/test-devops/jar-artifact -cache
+    
+    #- name: Generate a config.json
+    #  run: |
+    #    cat <<JSON > config.json
+    #    {
+    #      "auths": {
+    #        "registry.nuamexchange.com/test-devops/jar-artifact": {
+    #          "auth": "base64(${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }})"
+    #        }
+    #      }
+    #    }
+    #- name: Build and push an image
+    #  run: |
+    #    docker run \
+    #      -v $(pwd):/workspace \
+    #      -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
+    #      gcr.io/kaniko-project/executor:latest \
+    #        --context . \
+    #        --dockerfile Dockerfile \
+    #        --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
+    #        --cache=true \
+    #        --cache-repo registry.nuamexchange.com/test-devops/jar-artifact -cache
+    - name: Build and push
+      uses: int128/kaniko-action@v1
+      with:
+        push: true
+        tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
+        cache: true
+        cache-repository: registry.nuamexchange.com/test-devops/jar-artifact/cache
 #v5
