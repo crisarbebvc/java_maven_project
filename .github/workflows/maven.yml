@@ -69,7 +69,7 @@ jobs:
         {
           "auths": {
             "registry.nuamexchange.com/test-devops/jar-artifact": {
-              "auth": "$(echo -n $${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }} | base64)"
+              "auth": "base64(${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }})"
             }
           }
         }
