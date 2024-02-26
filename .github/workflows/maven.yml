@@ -84,6 +84,8 @@ jobs:
             --context "$(pwd)" \
             --dockerfile=Dockerfile \
             --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
+        ls -la
+        ls -la ./staging
 
     #- name: Build and push
     #  uses: int128/kaniko-action@v1
