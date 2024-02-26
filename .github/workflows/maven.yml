@@ -78,10 +78,10 @@ jobs:
         pwd
         ls -la
         docker run \
-          -v $(pwd):/staging \
+          -v $(pwd):/workspace \
           -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
           gcr.io/kaniko-project/executor:latest \
-            --context "$(pwd)"/workspace/ \
+            --context "$(pwd)"/staging/ \
             --dockerfile=Dockerfile \
             --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
 
