@@ -78,7 +78,7 @@ jobs:
         pwd
         ls -la
         docker run \
-          -v $(pwd):/workspace \
+          -v $(pwd):/staging \
           -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
           gcr.io/kaniko-project/executor:latest \
             --context "$(pwd)"/workspace/ \
