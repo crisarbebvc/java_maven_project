@@ -75,12 +75,13 @@ jobs:
           }
         }
         EOF
+        pwd
         ls -la
         docker run \
           -v $(pwd):/workspace \
           -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
           gcr.io/kaniko-project/executor:latest \
-            --context staging/ \
+            --context "$(pwd)"/workspace/ \
             --dockerfile=Dockerfile \
             --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
 
@@ -92,4 +93,4 @@ jobs:
     #    tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
     #    cache: true
     #    cache-repository: registry.nuamexchange.com/test-devops/jar-artifact/cache
-#v7
+#v6
