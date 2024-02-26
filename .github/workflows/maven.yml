@@ -76,7 +76,7 @@ jobs:
         }
         EOF
         pwd
-        ls -la
+        ls -la ./staging
         docker run \
           -v $(pwd):/workspace \
           -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
