@@ -91,4 +91,4 @@ jobs:
     #    tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
     #    cache: true
     #    cache-repository: registry.nuamexchange.com/test-devops/jar-artifact/cache
-#v6
+#v7
