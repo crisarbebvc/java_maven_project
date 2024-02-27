@@ -37,8 +37,7 @@ jobs:
         settings-path: ${{ github.workspace }}
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
-   
+ 
   publish-job:
     runs-on: ubuntu-latest
     needs: build
@@ -70,13 +69,6 @@ jobs:
       with:
         name: jar-artifact
         path: staging/
-    #- name: Build and push Docker image
-    #  uses: docker/build-push-action@v5 # more documentation
-    #  with:
-    #    context: .
-    #    push: true
-    #    tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} # semver tag version
-    #    labels: "env=${{ github.head_ref }}" # label env - Pull request branch - development, release, production
     - name: Build and push an image
       run: |
         AUTH=$(echo -n ${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }} | base64)
@@ -98,13 +90,3 @@ jobs:
             --context . \
             --dockerfile=Dockerfile \
             --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
-
-    #- name: Build and push
-    #  uses: int128/kaniko-action@v1
-    #  with:
-    #    context: ./
-    #    push: true
-    #    tags: registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }}
-    #    cache: true
-    #    cache-repository: registry.nuamexchange.com/test-devops/jar-artifact/cache
-#v6
