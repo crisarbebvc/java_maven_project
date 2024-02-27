@@ -15,7 +15,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-    - run: mvn dependency:analyze
+    - run: mvn dependency:analyze-report
 
   compile:
     runs-on: ubuntu-latest
