@@ -16,7 +16,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - run: mvn dependency:analyze-report
-    - run: mvn site
+    - run: ls -la ./target
 
   compile:
     runs-on: ubuntu-latest
@@ -66,38 +66,38 @@ jobs:
         path: staging/
         retention-days: 1
 
-#  deploy:
-#    runs-on: ubuntu-latest
-#    needs: publish-job
-#    steps:
-#    - uses: docker/login-action@v1
-#      with:
-#        registry: registry.nuamexchange.com
-#        username: ${{ secrets.HARBOR_USERNAME  }}
-#        password: ${{ secrets.HARBOR_PASSWORD }}
-#    - uses: actions/checkout@v4
-#    - uses: actions/download-artifact@v1
-#      with:
-#        name: jar-artifact
-#        path: staging/
-#    - name: Build and push an image
-#      run: |
-#        AUTH=$(echo -n ${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }} | base64)
-#        cat << EOF > config.json
-#        {
-#          "auths":{
-#            "registry.nuamexchange.com/test-devops/jar-artifact":{
-#              "username":"${{ secrets.HARBOR_USERNAME  }}","password":"${{ secrets.HARBOR_PASSWORD }}","auth":"${AUTH}"
-#            }
-#          }
-#        }
-#        EOF
-#        pwd
-#        ls -la ./staging
-#        docker run \
-#          -v $(pwd):/workspace \
-#          -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
-#          gcr.io/kaniko-project/executor:latest \
-#            --context . \
-#            --dockerfile=Dockerfile \
-#            --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
+  deploy:
+    runs-on: ubuntu-latest
+    needs: publish-job
+    steps:
+    - uses: docker/login-action@v1
+      with:
+        registry: registry.nuamexchange.com
+        username: ${{ secrets.HARBOR_USERNAME  }}
+        password: ${{ secrets.HARBOR_PASSWORD }}
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v1
+      with:
+        name: jar-artifact
+        path: staging/
+    - name: Build and push an image
+      run: |
+        AUTH=$(echo -n ${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }} | base64)
+        cat << EOF > config.json
+        {
+          "auths":{
+            "registry.nuamexchange.com/test-devops/jar-artifact":{
+              "username":"${{ secrets.HARBOR_USERNAME  }}","password":"${{ secrets.HARBOR_PASSWORD }}","auth":"${AUTH}"
+            }
+          }
+        }
+        EOF
+        pwd
+        ls -la ./staging
+        docker run \
+          -v $(pwd):/workspace \
+          -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
+          gcr.io/kaniko-project/executor:latest \
+            --context . \
+            --dockerfile=Dockerfile \
+            --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \

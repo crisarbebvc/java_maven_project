@@ -56,17 +56,31 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
+				<version>3.6.1</version>
 				<executions>
 					<execution>
-						<id>analyze</id>  <!-- execution id used in Maven command -->
+						<id>copy</id>
+						<phase>package</phase>
 						<goals>
-							<goal>analyze</goal>
+							<goal>copy</goal>
 						</goals>
-						<configuration>
-							<ignoreNonCompile>true</ignoreNonCompile>
-						</configuration>
 					</execution>
 				</executions>
+				<configuration>
+					<artifactItems>
+						<artifactItem>
+							<groupId>junit</groupId>
+							<artifactId>junit</artifactId>
+							<version>4.13.1</version>
+							<type>jar</type>
+							<overWrite>false</overWrite>
+							<outputDirectory>${project.build.directory}/lib</outputDirectory>
+						</artifactItem>
+					</artifactItems>
+					<outputDirectory>${project.build.directory}/wars</outputDirectory>
+					<overWriteReleases>false</overWriteReleases>
+					<overWriteSnapshots>true</overWriteSnapshots>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
