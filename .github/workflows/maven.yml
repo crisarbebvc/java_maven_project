@@ -20,7 +20,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - run: mvn dependency:analyze-report
+      - run: mvn dependency:tree
       - run: ls -la ./target
       - name: Compile the Project
         run: mvn -B compile
