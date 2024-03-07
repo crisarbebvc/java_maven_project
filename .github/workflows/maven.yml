@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - run: mvn dependency:analyze-report -DignoreNonCompile=true
-      - run: tar -czvf report.tar.gz target/site/
+      - run: tar -czf report.tar.gz target/site/
       - run: ls -la .
       - name: Compile the Project
         run: mvn compile
