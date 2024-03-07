@@ -20,6 +20,7 @@ jobs:
           cache: maven
       - run: mvn dependency:analyze-report
       - run: ls -la ./target
+      - run: ls -la .
       - name: Compile the Project
         run: mvn -B compile
       - name: Build with Maven
