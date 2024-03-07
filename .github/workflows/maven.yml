@@ -36,7 +36,7 @@ jobs:
           registry: registry.nuamexchange.com
           username: ${{ secrets.HARBOR_USERNAME  }}
           password: ${{ secrets.HARBOR_PASSWORD }}
-      - uses: actions/download-artifact@v1
+      - uses: actions/download-artifact@v4
         with:
           name: jar-artifact
           path: staging/
