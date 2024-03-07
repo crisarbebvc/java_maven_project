@@ -26,7 +26,7 @@ jobs:
       - name: Build with Maven
         run: mvn -B package --file pom.xml
       - run: mvn --batch-mode --update-snapshots verify
-      - run: mkdir staging && cp target/gs-maven-0.1.0.jar staging && mkdir report && cp report.tar.gz staging
+      - run: mkdir staging && cp target/gs-maven-0.1.0.jar staging && mkdir report && cp report.tar.gz report
       - uses: actions/upload-artifact@v4
         with:
           name: jar-artifact
