@@ -18,7 +18,7 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - run: mvn dependency:analyze-report
+      - run: mvn dependency:analyze-report -DignoreNonCompile=true
       - run: ls -la ./target
       - run: ls -la .
       - name: Compile the Project
