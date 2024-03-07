@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: 'Checkout Repo'
         uses: actions/checkout@v4
-      - name: 'Dependency Review'
-        uses: actions/dependency-review-action@v4
       - name: 'Setup Java JDK'
         uses: actions/setup-java@v4 # more documentation
         with:
