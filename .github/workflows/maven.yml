@@ -18,8 +18,9 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
           cache: maven
-      - run: mvn org.apache.maven.plugins:maven-dependency-plugin:analyze-report -DignoreNonCompile=true -Dplugin.dependency.version=3.6.1
-#      - run: tar -czf report.tar.gz target/site/
+      - run: mvn org.apache.maven.plugins:maven-dependency-plugin:3.6.1:analyze-report -DignoreNonCompile=true
+#      - run: mvn org.apache.maven.plugins:maven-dependency-plugin:analyze-report -DignoreNonCompile=true -Dplugin.dependency.version=3.6.1
+      - run: tar -czf report.tar.gz target/site/
       - run: ls -la ./target
       - run: ls -la .
       - name: Compile the Project
