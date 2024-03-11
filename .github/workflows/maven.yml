@@ -46,24 +46,24 @@ jobs:
         with:
           name: jar-artifact
           path: staging/
-#      - name: Build and push
-#        run: |
-#          AUTH=$(echo -n ${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }} | base64)
-#          cat << EOF > config.json
-#          {
-#            "auths":{
-#              "registry.nuamexchange.com/test-devops/jar-artifact":{
-#                "username":"${{ secrets.HARBOR_USERNAME  }}","password":"${{ secrets.HARBOR_PASSWORD }}","auth":"${AUTH}"
-#              }
-#            }
-#          }
-#          EOF
-#          pwd
-#          ls -la ./staging
-#          docker run \
-#            -v $(pwd):/workspace \
-#            -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
-#            gcr.io/kaniko-project/executor:latest \
-#              --context . \
-#              --dockerfile=Dockerfile \
-#              --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
+      - name: Build and push
+        run: |
+          AUTH=$(echo -n ${{ secrets.HARBOR_USERNAME  }}:${{ secrets.HARBOR_PASSWORD }} | base64)
+          cat << EOF > config.json
+          {
+            "auths":{
+              "registry.nuamexchange.com/test-devops/jar-artifact":{
+                "username":"${{ secrets.HARBOR_USERNAME  }}","password":"${{ secrets.HARBOR_PASSWORD }}","auth":"${AUTH}"
+              }
+            }
+          }
+          EOF
+          pwd
+          ls -la ./staging
+          docker run \
+            -v $(pwd):/workspace \
+            -v $(pwd)/config.json:/kaniko/.docker/config.json:ro \
+            gcr.io/kaniko-project/executor:latest \
+              --context . \
+              --dockerfile=Dockerfile \
+              --destination registry.nuamexchange.com/test-devops/jar-artifact:${{ github.run_number }} \
